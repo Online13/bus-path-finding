@@ -31,11 +31,11 @@ Un bus a son propre trajet. Notons $\text{G}_i = ( \text{Node}_i, \text{Edge}_i)
 
 Notons $bs_{start} \in \text{BusStops}$ l'arrêt de départ et $bs_{end} \in \text{BusStops}$ l'arrêt d'arrivé.
 
-Posons $\text{change\_bus}$ la fonction qui retourne le nombre de bus, étant donné une itinéraire
+Posons $\text{change bus}$ la fonction qui retourne le nombre de bus, étant donné une itinéraire
 
 $\begin{array}{lllll}
-\text{change\_bus} & : & \text{Node}^p & \to & \N \\
- & & n = ((bs_1,b_1), ..., (bs_p, b_p)) & \mapsto & \text{change\_bus}(n) \\
+\text{change bus} & : & \text{Node}^p & \to & \N \\
+ & & n = ((bs_1,b_1), ..., (bs_p, b_p)) & \mapsto & \text{change bus}(n) \\
 \end{array}$
 
 Posons $\text{duration}$ la fonction qui retourne la durée du trajet, étant donné une itinéraire
@@ -58,5 +58,5 @@ $\begin{array}{lllll}
     - $\forall i, (bs_i, bs_{i+1}) \in \text{Edge}$
     - $\forall i \neq k, bs_i \neq bs_k$
   - contraintes de changement de bus
-    - $\text{change\_bus}(X) \le 3$
+    - $\text{change bus}(X) \le 3$
     - $\text{duration}(X) \le 120$
