@@ -26,12 +26,16 @@ class DataSource:
         return [bus for bus, bus_stops in self.bus.items() if bus_stop in bus_stops]
 
     def get_neighbor_bus_stop(self, bus_stop_start: str):
-        neighbors = set()
-        for bus, bus_stops in self.bus.items():
-            for i, bus_stop in enumerate(bus_stops):
-                if bus_stop == bus_stop_start and i + 1 < len(bus_stops):
-                    neighbors.add(bus_stops[i + 1])
-        return neighbors
+        # neighbors = set()
+        # for bus, bus_stops in self.bus.items():
+        #     for i, bus_stop in enumerate(bus_stops):
+        #         if bus_stop == bus_stop_start and i + 1 < len(bus_stops):
+        #             neighbors.add(bus_stops[i + 1])
+        return set([
+            bse
+            for bss, bse in self.links
+            if bss == bus_stop_start
+        ])
 
     def get_neighbor_node(self, node):
         bus_stop_start, _ = node
