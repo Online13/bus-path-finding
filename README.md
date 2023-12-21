@@ -33,17 +33,17 @@ Notons $bs_{start} \in \text{BusStops}$ l'arrêt de départ et $bs_{end} \in \te
 
 Posons $\text{change bus}$ la fonction qui retourne le nombre de bus, étant donné une itinéraire
 
-$\begin{array}{lllll}
-\text{change bus} & : & \text{Node}^p & \to & \N \\
+$$\begin{array}{lllll}
+\text{change bus} & : & \text{Node}^p & \to & \mathbf{N} \\
  & & n = ((bs_1,b_1), ..., (bs_p, b_p)) & \mapsto & \text{change bus}(n) \\
-\end{array}$
+\end{array}$$
 
 Posons $\text{duration}$ la fonction qui retourne la durée du trajet, étant donné une itinéraire
 
-$\begin{array}{lllll}
-\text{duration} & : & \text{Node}^p & \to & \N \\
+$$ \begin{array}{lllll}
+\text{duration} & : & \text{Node}^p & \to & \mathbf{N} \\
  & & n = ((bs_1,b_1), ..., (bs_p, b_p)) & \mapsto & \text{duration}(n) = d \\
-\end{array}$
+\end{array}$$
 
 ### Définition du problème
 
