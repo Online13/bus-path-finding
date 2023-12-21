@@ -1,75 +1,103 @@
-from typing import Any
-from data import BUS, LINKS_DATA, LINKS, NOISE, BUS_STOPS
+import random
 
 
 class DataSource:
-    bus: dict[str, list[str]]
-    bus_stop_time: dict[str, int]
-    link_data: dict[tuple[str, str], dict[str, Any]]
+    def __init__(self) -> None:
+        random.seed(5)
 
-    def __init__(self):
-        self.reset()
-
-    def reset(self):
-        self.bus = BUS
-        self.links = LINKS
-        self.bus_stops = BUS_STOPS
-        self.link_data = LINKS_DATA
-
-    def get_weight_link(self, link: tuple[str, str]):
-        return self.link_data[link]
-
-    def get_time_link(self, link: tuple[str, str]):
-        weight = self.get_weight_link(link=link)
-        state = weight["state"]
-        duration = weight["duration"]
-        return duration + NOISE[state]
-
-    def get_bus_that_road_on_bus_stop(self, bus_stop: str):
-        return [bus for bus, bus_stops in self.bus.items() if bus_stop in bus_stops]
-
-    def get_neighbor_bus_stop(self, bus_stop_start: str):
-        return set([
-            bse
-            for bss, bse in self.links
-            if bss == bus_stop_start
-        ])
-
-    def get_neighbor_node(self, node):
-        bus_stop_start, _ = node
-
-        return [
-            (bus_stop_end, bus, self.get_time_link((bus_stop_start, bus_stop_end)))
-            for bus_stop_end in self.get_neighbor_bus_stop(bus_stop_start)
-            for bus in self.get_bus_that_road_on_bus_stop(bus_stop_end)
-        ]
-
-    def remove_bus_stop(self, bus_stop):
-        # remove in 
-        # links
-        self.links = [
-            (bss, bse)
-            for bss, bse in self.links
-            if bss != bus_stop and bse != bus_stop
-        ]
-        # bus stops
-        self.bus_stops = [
-            bs 
-            for bs in self.bus_stops
-            if bs == bus_stop
-        ]
-        # bus
-        self.bus = {
-            bus: [
-                bs
-                for bs in bus_stops
-                if bs != bus_stop
-            ]
-            for bus, bus_stops in self.bus.items()
+        self.BUS = {
+            "B": [
+                "Ambohitrimanjaka",
+                "Tetezana",
+                "Art_Malagasy",
+                "Score_digue",
+                "Andohatapenaka",
+                "_67_Ha",
+            ],
+            "119": [
+                "_67_Ha",
+                "Poste",
+                "Andavamamba",
+                "Ampefiloha",
+                "Mahamasina",
+                "Ambohijatovo",
+                "Antsahabe",
+                "Ankatso",
+            ],
+            "147_Red": [
+                "Anosy",
+                "Mahamasina",
+                "Belair",
+                "Besarety",
+                "Avaradoha",
+                "Meteo",
+                "Nanisana",
+                "Ankadindramamy",
+                "Ambatomaro",
+            ],
+            "147_Blue": [
+                "Anosy",
+                "Ambodin_Isotry",
+                "_67_Ha",
+                "Ankazomanga",
+                "Behoririka",
+                "Andravoahagny",
+                "Besarety",
+                "Homi",
+                "Meteo",
+                "Ampasampito",
+                "Ankadindramamy",
+                "Ambatomaro",
+            ],
+            "144": ["Besarety", "Avaradoha", "Ampasampito", "Mahazo", "Ambohimahitsy"],
         }
-        # link data
-        self.link_data = {
-            link: data
-            for link, data in self.link_data.items()
-            if link[0] != bus_stop and link[1] != bus_stop
+
+        self.BUS_STOPS = [
+            bus_stop
+            for bus, bus_stops in self.BUS.items()
+            for bus_stop in set(bus_stops)
+        ]
+
+        self.LINKS = [
+            ("Ambodin_Isotry", "_67_Ha"),
+            ("Art_Malagasy", "Score_digue"),
+            ("Antsahabe", "Ankatso"),
+            ("Andavamamba", "Ampefiloha"),
+            ("Ampefiloha", "Mahamasina"),
+            ("_67_Ha", "Poste"),
+            ("Meteo", "Ampasampito"),
+            ("Andohatapenaka", "_67_Ha"),
+            ("Meteo", "Nanisana"),
+            ("Mahamasina", "Belair"),
+            ("Ankazomanga", "Behoririka"),
+            ("Andravoahagny", "Besarety"),
+            ("Besarety", "Avaradoha"),
+            ("Ambohitrimanjaka", "Tetezana"),
+            ("Homi", "Meteo"),
+            ("Ampasampito", "Mahazo"),
+            ("Besarety", "Homi"),
+            ("Tetezana", "Art_Malagasy"),
+            ("Ampasampito", "Ankadindramamy"),
+            ("Poste", "Andavamamba"),
+            ("_67_Ha", "Ankazomanga"),
+            ("Behoririka", "Andravoahagny"),
+            ("Score_digue", "Andohatapenaka"),
+            ("Mahamasina", "Ambohijatovo"),
+            ("Anosy", "Mahamasina"),
+            ("Ankadindramamy", "Ambatomaro"),
+            ("Mahazo", "Ambohimahitsy"),
+            ("Anosy", "Ambodin_Isotry"),
+            ("Belair", "Besarety"),
+            ("Avaradoha", "Meteo"),
+            ("Ambohijatovo", "Antsahabe"),
+            ("Avaradoha", "Ampasampito"),
+            ("Nanisana", "Ankadindramamy"),
+        ]
+
+        self.LINKS_DATA = {
+            link: {
+                "state": random.choice(["good", "bad", "impassable"]),
+                "duration": random.randint(5, 10),  # in minutes
+            }
+            for link in self.LINKS
         }

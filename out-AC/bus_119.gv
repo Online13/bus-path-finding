@@ -1,0 +1,17 @@
+digraph G {
+	labelloc="t"	label="Itinerary of 119 Bus"	Andavamamba -> Ampefiloha [color="blue", weight=9, label="9"];
+	Ampefiloha -> Mahamasina [color="blue", weight=8, label="8"];
+	_67_Ha -> Poste [color="blue", weight=10, label="10"];
+	Andohatapenaka -> _67_Ha [weight=7, label="7"];
+	Mahamasina -> Belair [weight=9, label="9"];
+	Ankazomanga -> Behoririka [weight=9, label="9"];
+	Andravoahagny -> Besarety [weight=5, label="5"];
+	Besarety -> Avaradoha [weight=6, label="6"];
+	Homi -> Meteo [weight=8, label="8"];
+	Besarety -> Homi [weight=9, label="9"];
+	Poste -> Andavamamba [color="blue", weight=5, label="5"];
+	_67_Ha -> Ankazomanga [weight=6, label="6"];
+	Behoririka -> Andravoahagny [weight=6, label="6"];
+	Belair -> Besarety [weight=7, label="7"];
+	Avaradoha -> Meteo [weight=6, label="6"];
+}

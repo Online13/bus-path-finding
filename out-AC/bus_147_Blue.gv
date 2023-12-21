@@ -1,0 +1,17 @@
+digraph G {
+	labelloc="t"	label="Itinerary of 147_Blue Bus"	Andavamamba -> Ampefiloha [weight=9, label="9"];
+	Ampefiloha -> Mahamasina [weight=8, label="8"];
+	_67_Ha -> Poste [weight=10, label="10"];
+	Andohatapenaka -> _67_Ha [weight=7, label="7"];
+	Mahamasina -> Belair [weight=9, label="9"];
+	Ankazomanga -> Behoririka [color="blue", weight=9, label="9"];
+	Andravoahagny -> Besarety [color="blue", weight=5, label="5"];
+	Besarety -> Avaradoha [weight=6, label="6"];
+	Homi -> Meteo [color="blue", weight=8, label="8"];
+	Besarety -> Homi [color="blue", weight=9, label="9"];
+	Poste -> Andavamamba [weight=5, label="5"];
+	_67_Ha -> Ankazomanga [color="blue", weight=6, label="6"];
+	Behoririka -> Andravoahagny [color="blue", weight=6, label="6"];
+	Belair -> Besarety [weight=7, label="7"];
+	Avaradoha -> Meteo [weight=6, label="6"];
+}

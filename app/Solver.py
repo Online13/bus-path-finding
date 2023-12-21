@@ -1,13 +1,13 @@
 from collections import deque
-from app.DataSource import DataSource
+from app.DataModel import DataModel
 from data import NODE_INDEX as ni
 
 
 class Solver:
-    data_source: DataSource
+    data_model: DataModel
 
-    def __init__(self, data_source: DataSource):
-        self.data_source = data_source
+    def __init__(self, data_model: DataModel):
+        self.data_model = data_model
 
     def has_path(self, bus_stop_start, bus_stop_end):
         # Create a set to track visited nodes
@@ -25,7 +25,7 @@ class Solver:
             visited.add(current_node)
             # Add unvisited neighbors to the queue
             for neighbor in [
-                bse for bss, bse in self.data_source.links if bss == current_node
+                bse for bss, bse in self.data_model.links if bss == current_node
             ]:
                 if neighbor not in visited:
                     queue.append(neighbor)
@@ -34,19 +34,21 @@ class Solver:
         return False
 
     def make_arc_consistency(self, bus_stop_start, bus_stop_end):
-        for bus_stop in self.data_source.bus_stops:
+        bus_stop_to_remove = []
+        for bus_stop in self.data_model.bus_stops:
             if not self.has_path(bus_stop_start, bus_stop) or not self.has_path(
                 bus_stop, bus_stop_end
             ):
-                self.data_source.remove_bus_stop(bus_stop)
+                bus_stop_to_remove.append(bus_stop)
+                self.data_model.remove_bus_stop(bus_stop)
+        return bus_stop_to_remove
 
     def find_path(self, bus_stop_start, bus_stop_end):
-
         solutions = []
         queue = deque(
             [
                 (bus_stop_start, bus, [(bus_stop_start, bus, 1, 0)])
-                for _, bus, _ in self.data_source.get_neighbor_node(
+                for _, bus, _ in self.data_model.get_neighbor_node(
                     (bus_stop_start, None)
                 )
             ]
@@ -60,7 +62,7 @@ class Solver:
                 solutions.append(solution)
                 continue
 
-            for bus_stop, bus, time in self.data_source.get_neighbor_node(
+            for bus_stop, bus, time in self.data_model.get_neighbor_node(
                 (bus_stop_node, bus_node)
             ):
                 result = solution[-1]
