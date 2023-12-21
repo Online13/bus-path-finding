@@ -41,7 +41,6 @@ class Solver:
                 self.data_source.remove_bus_stop(bus_stop)
 
     def find_path(self, bus_stop_start, bus_stop_end):
-        self.make_arc_consistency(bus_stop_start, bus_stop_end)
 
         solutions = []
         queue = deque(

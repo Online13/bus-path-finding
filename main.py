@@ -5,10 +5,25 @@ data_source = DataSource()
 # ------------------------------------------
 
 from app.Solver import Solver
+from app.Timer import Timer
 
 solver = Solver(data_source)
-solutions = solver.find_path("Andohatapenaka", "Meteo")
-print("solutions=", solutions, end="\n" * 4)
+bus_stop_start = "Andohatapenaka"
+bus_stop_end = "Meteo"
+
+with Timer() as timer1:
+    solutions = solver.find_path(bus_stop_start, bus_stop_end)
+    print("number of possibility = ", len(solutions))
+    # solver.summary(solutions)
+
+print()
+solver.data_source.reset()
+solver.make_arc_consistency(bus_stop_start, bus_stop_end)
+
+with Timer() as timer2:
+    solutions = solver.find_path(bus_stop_start, bus_stop_end)
+    print("number of possibility = ", len(solutions))
+
 solver.summary(solutions)
 
 # ------------------------------------------

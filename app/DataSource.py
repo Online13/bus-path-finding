@@ -8,6 +8,9 @@ class DataSource:
     link_data: dict[tuple[str, str], dict[str, Any]]
 
     def __init__(self):
+        self.reset()
+
+    def reset(self):
         self.bus = BUS
         self.links = LINKS
         self.bus_stops = BUS_STOPS
@@ -26,11 +29,6 @@ class DataSource:
         return [bus for bus, bus_stops in self.bus.items() if bus_stop in bus_stops]
 
     def get_neighbor_bus_stop(self, bus_stop_start: str):
-        # neighbors = set()
-        # for bus, bus_stops in self.bus.items():
-        #     for i, bus_stop in enumerate(bus_stops):
-        #         if bus_stop == bus_stop_start and i + 1 < len(bus_stops):
-        #             neighbors.add(bus_stops[i + 1])
         return set([
             bse
             for bss, bse in self.links
@@ -47,4 +45,31 @@ class DataSource:
         ]
 
     def remove_bus_stop(self, bus_stop):
-        pass
+        # remove in 
+        # links
+        self.links = [
+            (bss, bse)
+            for bss, bse in self.links
+            if bss != bus_stop and bse != bus_stop
+        ]
+        # bus stops
+        self.bus_stops = [
+            bs 
+            for bs in self.bus_stops
+            if bs == bus_stop
+        ]
+        # bus
+        self.bus = {
+            bus: [
+                bs
+                for bs in bus_stops
+                if bs != bus_stop
+            ]
+            for bus, bus_stops in self.bus.items()
+        }
+        # link data
+        self.link_data = {
+            link: data
+            for link, data in self.link_data.items()
+            if link[0] != bus_stop and link[1] != bus_stop
+        }

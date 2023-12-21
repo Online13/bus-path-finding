@@ -89,7 +89,7 @@ LINKS = [
 
 LINKS_DATA = {
     link: {
-        "state": random.choice(["good", "bad", "impassable"]),
+        "state": "good", # random.choice(["good", "bad", "impassable"]),
         "duration": random.randint(5, 10),  # in minutes
     }
     for link in LINKS
